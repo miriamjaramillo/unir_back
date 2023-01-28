@@ -2,6 +2,9 @@ package com.unir.peliculas.operador.model.service;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
@@ -23,47 +26,37 @@ public class AlquilerServiceFeign implements AlquilerService {
 	private AlquilerRepository alquilerRepository;
 
 	@Override
-	public Pelicula findById(Long peliculaId) {
-		return clienteFeign.getPeliculaPorId(peliculaId);
-	}
-
-	@Override
-	public Alquiler agregarAlquiler(Alquiler alquiler) {
-		Pelicula existePelicula = clienteFeign.getPeliculaPorId(alquiler.getPeliculaId());
+	public Alquiler agregarAlquiler(Alquiler alquiler, Long idPelicula) throws Exception {
+		//Pelicula existePelicula = clienteFeign.getPeliculaPorId(idPelicula);
 		
-		if(existePelicula == null){
-			return null;
-		}
+		Pelicula existePelicula = Optional.ofNullable(clienteFeign.getPeliculaPorId(idPelicula))
+				.orElseThrow(() -> new Exception("No existe la pelicula con el id = " + idPelicula));
 		
 		Alquiler newAlquiler = new Alquiler();
-		newAlquiler.setCantidadPeliculas(alquiler.getCantidadPeliculas());
-		newAlquiler.setClienteId(alquiler.getClienteId());
-		newAlquiler.setFecha(new Date());
+		
+		if (existePelicula.getEjemplares() >= alquiler.getNumeroAlquiladas() && alquiler.getOperacion().equals("ALQ") ||
+				alquiler.getOperacion().equals("DEV")) {
+			
+			newAlquiler.setClienteNombre(alquiler.getClienteNombre());
+			newAlquiler.setNumeroAlquiladas(alquiler.getNumeroAlquiladas());
+			newAlquiler.setCostoUnidad(existePelicula.getPrecio());
+			newAlquiler.setTotalAlquiler(alquiler.getTotalAlquiler());
+			newAlquiler.setFecha(new Date());
+			newAlquiler.setOperacion(alquiler.getOperacion());
+			newAlquiler.setNombrePelicula(existePelicula.getNombre());
+			newAlquiler.setPeliculaId(existePelicula.getPeliculaId());
+			
+			clienteFeign.actualizarEjemplares(idPelicula, alquiler.getNumeroAlquiladas(), alquiler.getOperacion());
+		}
+		
 		return alquilerRepository.save(newAlquiler);
 	}
 
 	@Override
-	public List<Alquiler> getRentByUserIdOrderFalse(String userId) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<Alquiler> getRentByUserIdOrderTrue(String userId) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void completarOrden(String userId) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void eliminarAlquiler(String id) {
-		// TODO Auto-generated method stub
-
+	public List<Alquiler> listarAlquiler() {
+		return StreamSupport
+                .stream(alquilerRepository.findAll().spliterator(), false)
+                .collect(Collectors.toList());
 	}
 
 }

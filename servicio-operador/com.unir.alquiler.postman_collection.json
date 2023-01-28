@@ -1,0 +1,59 @@
+{
+	"info": {
+		"_postman_id": "2abe5693-3781-4db8-b5e1-65986715a1e9",
+		"name": "com.unir.alquiler",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "13171929"
+	},
+	"item": [
+		{
+			"name": "Alquilar Películas",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"clienteNombre\": \"Miriam Jaramillo\",\r\n  \"numeroAlquiladas\": 1,\r\n  \"operacion\": \"DEV\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8091/alquiler/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8091",
+					"path": [
+						"alquiler",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Listar Películas Alquiladas",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8091/alquiler/listar",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8091",
+					"path": [
+						"alquiler",
+						"listar"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

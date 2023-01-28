@@ -1,0 +1,86 @@
+{
+	"info": {
+		"_postman_id": "97e6b380-7222-4ce9-ad24-1a3745128ac7",
+		"name": "com.unir.peliculas",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "13171929"
+	},
+	"item": [
+		{
+			"name": "Actualizar Ejemplares",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8090/peliculas/actualiza-ejemplares/1/2/ALQ",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"peliculas",
+						"actualiza-ejemplares",
+						"1",
+						"2",
+						"ALQ"
+					]
+				},
+				"description": "Actualizar ejemplares"
+			},
+			"response": []
+		},
+		{
+			"name": "Listar Peliculas",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8090/peliculas/listar",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"peliculas",
+						"listar"
+					]
+				},
+				"description": "Listado de películas"
+			},
+			"response": []
+		},
+		{
+			"name": "Obtener Película Por Id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8090/peliculas/pelicula/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"peliculas",
+						"pelicula",
+						"1"
+					]
+				},
+				"description": "Permite obtener el detalle de una película por su ID"
+			},
+			"response": []
+		}
+	]
+}

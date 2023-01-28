@@ -1,6 +1,7 @@
 package com.unir.peliculas.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -44,7 +45,7 @@ public class PeliculasServiceImpl implements PeliculasService{
 				) 
 		{
 
-			Pelicula pelicula = Pelicula.builder().
+			/*Pelicula pelicula = Pelicula.builder().
 					nombre(request.getNombre()).
 					director(request.getDirector()).
 					fecha(request.getFecha()).
@@ -55,20 +56,31 @@ public class PeliculasServiceImpl implements PeliculasService{
 					categoria(request.getCategoria()).
 					visible(request.getVisible()).
 					urlimage(request.getUrlimage()).
-					build();
+					build();*/
 
-			return repository.save(pelicula);
+			return repository.save(null);
 		} else {
 			return null;
 		}
 	}
 
 	@Override
-	public Pelicula getPeliculaById(Long peliculaId) {
-		Pelicula existePelicula = repository.findByPeliculaId(peliculaId);
-		if(existePelicula == null){
-			return null;
+	public Pelicula getPeliculaById(Long peliculaId) throws Exception {		
+		return (Pelicula) Optional.ofNullable(repository.findByPeliculaId(peliculaId))
+				.orElseThrow(() ->  
+				new Exception("Pelicula no encontrada : " + peliculaId)
+		);
+	}
+
+	@Override
+	public Pelicula updateEjemplaresById(Long peliculaId, Integer numEjemplares, String operacion) throws Exception {
+		Pelicula existePelicula = getPeliculaById(peliculaId);
+		
+		if (existePelicula != null) {
+			Integer totalEjemplares = operacion.equals("ALQ") ? (existePelicula.getEjemplares() - numEjemplares) : (existePelicula.getEjemplares() + numEjemplares);
+			existePelicula.setEjemplares(totalEjemplares);
+			return repository.save(existePelicula);
 		}
-		return existePelicula;
+		return null;
 	}
 }

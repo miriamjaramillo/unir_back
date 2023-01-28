@@ -1,6 +1,7 @@
 package com.unir.peliculas.operador.model.pojo;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 
 import jakarta.persistence.Column;
@@ -34,26 +35,29 @@ public class Alquiler implements Serializable {
 	@Column(name =  "alquiler_id", unique = true  , nullable = false)
 	private Long alquilerId;
 	
-	@Column(name =  "cliente_id")
-	private Long clienteId;
+	@Column(name =  "cliente_nombre")
+	private String clienteNombre;
 	
-	@Column(name =  "orden")
-	private boolean orden;
-	
-	@Column(name =  "cantidad_peliculas")
-	private Integer cantidadPeliculas;
+	@Column(name =  "numero_alquiladas")
+	private Integer numeroAlquiladas;
 
 	@Column(name =  "costo_unidad")
-	private Double costoUnidad;
+	private BigDecimal costoUnidad;
 	
 	@Column(name =  "total_alquiler")
-	private Double totalAlquiler;
+	private BigDecimal totalAlquiler;
 	
 	@Column(name =  "fecha")
 	private Date fecha;
 	
 	@Column(name =  "pelicula_id")
 	private Long peliculaId;
+	
+	@Column(name =  "operacion")
+	private String operacion;
+	
+	@Column(name =  "nombre_pelicula")
+	private String nombrePelicula;
 
 	public Long getAlquilerId() {
 		return alquilerId;
@@ -63,43 +67,27 @@ public class Alquiler implements Serializable {
 		this.alquilerId = alquilerId;
 	}
 
-	public Long getClienteId() {
-		return clienteId;
+	public String getClienteNombre() {
+		return clienteNombre;
 	}
 
-	public void setClienteId(Long clienteId) {
-		this.clienteId = clienteId;
+	public void setClienteNombre(String clienteNombre) {
+		this.clienteNombre = clienteNombre;
 	}
 
-	public boolean isOrden() {
-		return orden;
+	public Integer getNumeroAlquiladas() {
+		return numeroAlquiladas;
 	}
 
-	public void setOrden(boolean orden) {
-		this.orden = orden;
+	public void setNumeroAlquiladas(Integer cantidadPeliculas) {
+		this.numeroAlquiladas = cantidadPeliculas;
 	}
 
-	public Integer getCantidadPeliculas() {
-		return cantidadPeliculas;
-	}
-
-	public void setCantidadPeliculas(Integer cantidadPeliculas) {
-		this.cantidadPeliculas = cantidadPeliculas;
-	}
-
-	public Double getCostoUnidad() {
-		return costoUnidad;
-	}
-
-	public void setCostoUnidad(Double costoUnidad) {
-		this.costoUnidad = costoUnidad;
-	}
-
-	public Double getTotalAlquiler() {
+	public BigDecimal getTotalAlquiler() {
 		return totalAlquiler;
 	}
 
-	public void setTotalAlquiler(Double totalAlquiler) {
+	public void setTotalAlquiler(BigDecimal totalAlquiler) {
 		this.totalAlquiler = totalAlquiler;
 	}
 
@@ -123,5 +111,33 @@ public class Alquiler implements Serializable {
 		return serialVersionUID;
 	}
 	
+	public void calculaCostoAlquiler() {
+		BigDecimal total = this.operacion.equals("ALQ") ? BigDecimal.valueOf(this.numeroAlquiladas).multiply(this.costoUnidad) : BigDecimal.valueOf(0);
+		this.setTotalAlquiler(total);
+	}
 	
+	public BigDecimal getCostoUnidad() {
+		calculaCostoAlquiler();
+		return costoUnidad;
+	}
+	
+	public void setCostoUnidad(BigDecimal costoUnidad) {
+		this.costoUnidad = costoUnidad;
+	}
+	
+	public String getOperacion() {
+		return operacion;
+	}
+	
+	public void setOperacion(String operacion) {
+		this.operacion = operacion;
+	}
+	
+	public String getNombrePelicula() {
+		return nombrePelicula;
+	}
+	
+	public void setNombrePelicula(String nombrePelicula) {
+		this.nombrePelicula = nombrePelicula;
+	}
 }

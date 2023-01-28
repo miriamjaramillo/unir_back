@@ -65,12 +65,40 @@ public class Pelicula implements Serializable{
 	@Column(name = "precio")
 	private BigDecimal precio;
 	
-	//bi-directional many-to-one association to Alquiler
-	/*@OneToMany(
-		mappedBy = "pelicula",
-		cascade = CascadeType.ALL,
-		fetch = FetchType.LAZY
-	)
-	private List<Alquiler> alquiler = new ArrayList<>();*/
+	@Column(name = "ejemplares")
+	private Integer ejemplares;
+	
+	public Long getPeliculaId() {
+		return peliculaId;
+	}
+	
+	public void setPeliculaId(Long peliculaId) {
+		this.peliculaId = peliculaId;
+	}
+	
+	public Integer getEjemplares() {
+		return ejemplares;
+	}
+	
+	public void setEjemplares(Integer ejemplares) {
+		this.ejemplares = ejemplares;
+	}
+	
+	public BigDecimal getPrecio() {
+		return precio;
+	}
+	
+	public void setPrecio(BigDecimal precio) {
+		this.precio = precio;
+	}
+	
+	public String getNombre() {
+		return nombre;
+	}
+	
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+	
 }
 

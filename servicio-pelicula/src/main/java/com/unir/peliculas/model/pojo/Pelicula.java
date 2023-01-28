@@ -66,6 +66,9 @@ public class Pelicula implements Serializable{
 	
 	@Column(name = "precio")
 	private BigDecimal precio;
+	
+	@Column(name = "ejemplares")
+	private Integer ejemplares;
 
 	public Long getPeliculaId() {
 		return peliculaId;
@@ -122,6 +125,10 @@ public class Pelicula implements Serializable{
 	public void setDuracion(String duracion) {
 		this.duracion = duracion;
 	}
+	
+	public void setEjemplares(Integer ejemplares) {
+		this.ejemplares = ejemplares;
+	}
 
 	public String getYoutube() {
 		return youtube;
@@ -167,5 +174,8 @@ public class Pelicula implements Serializable{
 		return serialVersionUID;
 	}
 	
+	public Integer getEjemplares() {
+		return ejemplares;
+	}
 	
 }
