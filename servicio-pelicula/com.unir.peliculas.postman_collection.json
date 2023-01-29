@@ -81,6 +81,27 @@
 				"description": "Permite obtener el detalle de una película por su ID"
 			},
 			"response": []
+		},
+		{
+			"name": "Listar película por categoria, nombre o director",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8090/peliculas/listar",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"peliculas",
+						"listar"
+					]
+				},
+				"description": "Lista las películas por categoría, nombre o director"
+			},
+			"response": []
 		}
 	]
 }
